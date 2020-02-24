@@ -3,7 +3,7 @@ const chai = require('chai')
 const expect = chai.expect
 const dirtyChai = require('dirty-chai')
 chai.use(dirtyChai)
-const generateIndex = require('../lib/index')
+const { _internal_generateIndex: generateIndex } = require('../lib/generate-index')
 
 describe('Generate index', () => {
   it('should generate an empty index when there\'s no page', () => {
