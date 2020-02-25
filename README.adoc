@@ -82,11 +82,21 @@ For instance, as a command line:
 $ DOCSEARCH_ENABLED=true DOCSEARCH_ENGINE=lunr antora site.yml
 ----
 
-==== To add this functionality to a customized UI
+==== To add this functionality to a UI customized from the Antora default UI
 
-Assuming your UI bundle project is set up similarly to the Antora default UI project, there are two actions:
-
-. Copy the css and js from the supplemental_ui directory to the corresponding locations in your UI project.
+. Copy the files in `src` to your UI `src.
+. Modify src/css/site.css, adding this line:
+[source,css]
+----
+@import "search.css";
+----
+. Modify your UI project package.json, adding:
+[source,json]
+----
+  "dependencies": {
+    "lunr": "2.3.8"
+  },
+----
 . Modify the appropriate partials to include the important content from the supplemental_ui partials:
 
 .footer-scripts.hbs
@@ -102,12 +112,6 @@ Assuming your UI bundle project is set up similarly to the Antora default UI pro
 <script async src="{{uiRootPath}}/../search-index.js"></script>
 ----
 
-.head-styles.hbs
-[source,html]
-----
-      <link rel="stylesheet" href="{{uiRootPath}}/css/search.css">
-----
-
 .header-content.hbs in the `navbar-brand` div
 [source,html]
 ----
@@ -119,10 +123,6 @@ Assuming your UI bundle project is set up similarly to the Antora default UI pro
 In this case no env vars are needed.
 
 ==== General UI notes
-
-NOTE: For this to function correctly you must provide the `site.url` key in your playbook file.
-See the Antora docs on the link:https://docs.antora.org/antora/1.1/playbook/playbook-schema/[playbook schema].
-If using the site locally (not serving from a web server) then you can set your `site.url` to a `file://` reference, e.g. `file:///home/documents/antora/website/public/`.
 
 TIP: If you are using link:https://www.npmjs.com/package/serve[serve] HTTP server to view your site locally,
 set the `site.url` to `http://localhost:5000`.
