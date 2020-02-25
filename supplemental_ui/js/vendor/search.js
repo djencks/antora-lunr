@@ -90,7 +90,7 @@ window.antoraLunr = (function (lunr) {
     return hits
   }
 
-  function createSearchResult(result, store, searchResultDataset) {
+  function createSearchResult (result, store, searchResultDataset) {
     result.forEach(function (item) {
       var url = item.ref
       var hash
@@ -112,7 +112,8 @@ window.antoraLunr = (function (lunr) {
     var documentHit = document.createElement('div')
     documentHit.classList.add('search-result-document-hit')
     var documentHitLink = document.createElement('a')
-    documentHitLink.href = item.ref
+    var rootPath = window.antora.basePath
+    documentHitLink.href = rootPath + item.ref
     documentHit.appendChild(documentHitLink)
     hits.forEach(function (hit) {
       documentHitLink.appendChild(hit)
@@ -191,7 +192,10 @@ window.antoraLunr = (function (lunr) {
   }
 
   function init (data) {
-    var index = Object.assign({index: lunr.Index.load(data.index), store: data.store})
+    var index = Object.assign({
+      index: lunr.Index.load(data.index),
+      store: data.store,
+    })
     var search = debounce(function () {
       searchIndex(index.index, index.store, searchInput.value)
     }, 100)
